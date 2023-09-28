@@ -65,3 +65,24 @@ void navigateAndFinish(BuildContext context, Widget widget) =>
         context,
         MaterialPageRoute(builder: (BuildContext context) => widget),
         (Route<dynamic> route) => false);
+
+void showToast({required String text, required ToastStates state}) => Fluttertoast.showToast(
+    msg: text,
+    toastLength: Toast.LENGTH_LONG,
+    gravity: ToastGravity.BOTTOM,
+    timeInSecForIosWeb: 5,
+    backgroundColor: chooseToastColor(state),
+    textColor: Colors.white,
+    fontSize: 16.0
+);
+
+enum ToastStates {success, error, warning}
+Color chooseToastColor(ToastStates state){
+  Color color;
+  switch(state){
+    case ToastStates.success: color = Colors.green;
+    case ToastStates.error: color = Colors.red;
+    default: color = Colors.yellow;
+  }
+  return color;
+}

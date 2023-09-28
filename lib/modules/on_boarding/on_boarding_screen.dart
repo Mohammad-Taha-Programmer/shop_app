@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/modules/login/shop_login_screen.dart';
 import 'package:shop_app/shared/components/components.dart';
+import 'package:shop_app/shared/network/local/cache_helper.dart';
 import 'package:shop_app/shared/styles/colors.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -29,16 +30,19 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     BoardingModel(image: 'assets/images/3.png', title: 'Enjoy The Trip', body: 'Live the dream, Enjoy your life at it\'s fullest, Don\'t look back at time!'),
   ];
   bool isLast = false;
+
+  void submit(){
+    CacheHelper.saveData(key: 'onBoarding', value: true).then((value) {
+      if(value){
+        navigateAndFinish(context, ShopLoginScreen());
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          defaultTextButton(function: (){
-            navigateAndFinish(context, ShopLoginScreen());
-          }, text: 'skip')
-        ],
-      ),
+      appBar: AppBar(actions: [defaultTextButton(function: submit, text: 'skip')]),
       body: Padding(
         padding: const EdgeInsets.all(30.0),
         child: Column(
@@ -80,7 +84,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 FloatingActionButton(onPressed: (){
 
                   if(isLast) {
-                    navigateAndFinish(context, ShopLoginScreen());
+                    submit();
                   }else{
                     boardController.nextPage(duration: const Duration(milliseconds: 750), curve: Curves.linear);
                   }
