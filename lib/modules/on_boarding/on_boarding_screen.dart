@@ -29,15 +29,14 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     BoardingModel(image: 'assets/images/2.png', title: 'Book Your Flight', body: 'After you\'ve planned your trip, it\'s a good time to book your flight'),
     BoardingModel(image: 'assets/images/3.png', title: 'Enjoy The Trip', body: 'Live the dream, Enjoy your life at it\'s fullest, Don\'t look back at time!'),
   ];
+
   bool isLast = false;
 
-  void submit(){
-    CacheHelper.saveData(key: 'onBoarding', value: true).then((value) {
-      if(value){
+  void submit()=> CacheHelper.saveData(key: 'onBoarding', value: true).then((onBoarding) {
+      if(onBoarding){
         navigateAndFinish(context, ShopLoginScreen());
       }
     });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +81,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 ),
                 const Spacer(),
                 FloatingActionButton(onPressed: (){
-
                   if(isLast) {
                     submit();
                   }else{
